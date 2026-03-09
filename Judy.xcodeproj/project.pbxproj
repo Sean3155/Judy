@@ -6,8 +6,17 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		7981C07E2F5F526900979365 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7981C07D2F5F525800979365 /* HomeView.swift */; };
+		7981C0802F5F527E00979365 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7981C07F2F5F527A00979365 /* ChatView.swift */; };
+		7981C0822F5F528D00979365 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7981C0812F5F528800979365 /* SettingsView.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		7981C06F2F5F515500979365 /* Judy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Judy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7981C07D2F5F525800979365 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		7981C07F2F5F527A00979365 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		7981C0812F5F528800979365 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -32,6 +41,9 @@
 		7981C0662F5F515500979365 = {
 			isa = PBXGroup;
 			children = (
+				7981C0812F5F528800979365 /* SettingsView.swift */,
+				7981C07D2F5F525800979365 /* HomeView.swift */,
+				7981C07F2F5F527A00979365 /* ChatView.swift */,
 				7981C0712F5F515500979365 /* Judy */,
 				7981C0702F5F515500979365 /* Products */,
 			);
@@ -119,6 +131,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7981C0822F5F528D00979365 /* SettingsView.swift in Sources */,
+				7981C0802F5F527E00979365 /* ChatView.swift in Sources */,
+				7981C07E2F5F526900979365 /* HomeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,6 +268,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Judy;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -284,6 +300,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Judy;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
