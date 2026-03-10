@@ -55,6 +55,14 @@ struct WeatherAdviceEngine {
             windImpact: windImpact,
             rainImpact: rainImpact
         )
+
+        let walkComfortScore = calculateWalkComfortScore(
+            feelsLike: feelsLike,
+            humidity: humidity,
+            windImpact: windImpact,
+            rainImpact: rainImpact,
+            windGust: windGust
+        )
         
         return WeatherAdvice(
             comfortLevel: comfort,
@@ -65,7 +73,8 @@ struct WeatherAdviceEngine {
             summary: summary,
             comfortNote: comfortNote,
             isGoodForShortWalk: shortWalkOkay,
-            isGoodForLongWalk: longWalkOkay
+            isGoodForLongWalk: longWalkOkay,
+            walkComfortScore: walkComfortScore
         )
     }
 }
@@ -258,6 +267,55 @@ private extension WeatherAdviceEngine {
         return "This should be okay in short bursts, depending on what you are wearing."
     }
     
+
+    static func calculateWalkComfortScore(
+        feelsLike: Double,
+        humidity: Int,
+        windImpact: WindImpactLevel,
+        rainImpact: RainImpactLevel,
+        windGust: Double?
+    ) -> Int {
+        var score = 100
+
+        if feelsLike < -5 || feelsLike > 32 {
+            score -= 35
+        } else if feelsLike < 5 || feelsLike > 28 {
+            score -= 20
+        } else if feelsLike < 10 || feelsLike > 24 {
+            score -= 10
+        }
+
+        switch windImpact {
+        case .low:
+            break
+        case .moderate:
+            score -= 10
+        case .high:
+            score -= 25
+        }
+
+        switch rainImpact {
+        case .none:
+            break
+        case .light:
+            score -= 10
+        case .moderate:
+            score -= 25
+        case .heavy:
+            score -= 40
+        }
+
+        if humidity >= 80 || humidity <= 25 {
+            score -= 8
+        }
+
+        if let windGust, windGust >= 12 {
+            score -= 8
+        }
+
+        return max(0, min(100, score))
+    }
+
     static func isGoodForShortWalk(
         feelsLike: Double,
         rainImpact: RainImpactLevel
