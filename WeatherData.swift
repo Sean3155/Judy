@@ -26,4 +26,5 @@ struct MainInfo: Decodable {
 
 struct WindInfo: Decodable {
     let speed: Double
+    let gust: Double?
 }

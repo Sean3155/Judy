@@ -7,6 +7,7 @@ struct WeatherAdviceEngine {
         let feelsLike = weather.main.feelsLike
         let humidity = weather.main.humidity
         let windSpeed = weather.wind.speed
+        let windGust = weather.wind.gust
         let description = weather.weather.first?.description.lowercased() ?? ""
         
         let comfort = determineComfortLevel(
@@ -27,6 +28,7 @@ struct WeatherAdviceEngine {
             feelsLike: feelsLike,
             windImpact: windImpact,
             rainImpact: rainImpact,
+            windGust: windGust,
             description: description
         )
         
@@ -175,6 +177,7 @@ private extension WeatherAdviceEngine {
         feelsLike: Double,
         windImpact: WindImpactLevel,
         rainImpact: RainImpactLevel,
+        windGust: Double?,
         description: String
     ) -> [String] {
         var cautions: [String] = []
@@ -184,6 +187,10 @@ private extension WeatherAdviceEngine {
             cautions.append("hats may be annoying to keep on")
         } else if windImpact == .moderate {
             cautions.append("breeze may make it feel cooler than expected")
+        }
+
+        if let windGust, windGust >= 12, windImpact != .high {
+            cautions.append("occasional wind gusts may still disrupt loose clothing")
         }
         
         if rainImpact == .light {
