@@ -10,6 +10,16 @@
 		7981C07E2F5F526900979365 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7981C07D2F5F525800979365 /* HomeView.swift */; };
 		7981C0802F5F527E00979365 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7981C07F2F5F527A00979365 /* ChatView.swift */; };
 		7981C0822F5F528D00979365 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7981C0812F5F528800979365 /* SettingsView.swift */; };
+		799251BE2F5FD11C00012D6E /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799251BD2F5FD10D00012D6E /* WeatherData.swift */; };
+		799251C02F5FD12500012D6E /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799251BF2F5FD11F00012D6E /* WeatherService.swift */; };
+		799251C22F5FD12F00012D6E /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799251C12F5FD12A00012D6E /* Config.swift */; };
+		799251C42F5FD43F00012D6E /* WeatherAdvice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799251C32F5FD43700012D6E /* WeatherAdvice.swift */; };
+		799251C62F5FD44900012D6E /* WeatherAdviceEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799251C52F5FD44300012D6E /* WeatherAdviceEngine.swift */; };
+		799251C82F5FD45300012D6E /* AdviceFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799251C72F5FD44D00012D6E /* AdviceFormatter.swift */; };
+		799251CA2F5FD8C800012D6E /* CONTEXT.md in Resources */ = {isa = PBXBuildFile; fileRef = 799251C92F5FD8BC00012D6E /* CONTEXT.md */; };
+		799251CE2F5FD92000012D6E /* ARCHITECTURE.md in Resources */ = {isa = PBXBuildFile; fileRef = 799251CD2F5FD91600012D6E /* ARCHITECTURE.md */; };
+		799251D02F5FD92E00012D6E /* BACKLOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 799251CF2F5FD92800012D6E /* BACKLOG.md */; };
+		799251D42F5FDB1A00012D6E /* SPEC.md in Resources */ = {isa = PBXBuildFile; fileRef = 799251D32F5FDB1400012D6E /* SPEC.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -17,6 +27,16 @@
 		7981C07D2F5F525800979365 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		7981C07F2F5F527A00979365 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		7981C0812F5F528800979365 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		799251BD2F5FD10D00012D6E /* WeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
+		799251BF2F5FD11F00012D6E /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
+		799251C12F5FD12A00012D6E /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		799251C32F5FD43700012D6E /* WeatherAdvice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAdvice.swift; sourceTree = "<group>"; };
+		799251C52F5FD44300012D6E /* WeatherAdviceEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAdviceEngine.swift; sourceTree = "<group>"; };
+		799251C72F5FD44D00012D6E /* AdviceFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdviceFormatter.swift; sourceTree = "<group>"; };
+		799251C92F5FD8BC00012D6E /* CONTEXT.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CONTEXT.md; sourceTree = "<group>"; };
+		799251CD2F5FD91600012D6E /* ARCHITECTURE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ARCHITECTURE.md; sourceTree = "<group>"; };
+		799251CF2F5FD92800012D6E /* BACKLOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = BACKLOG.md; sourceTree = "<group>"; };
+		799251D32F5FDB1400012D6E /* SPEC.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = SPEC.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -41,6 +61,16 @@
 		7981C0662F5F515500979365 = {
 			isa = PBXGroup;
 			children = (
+				799251D32F5FDB1400012D6E /* SPEC.md */,
+				799251CF2F5FD92800012D6E /* BACKLOG.md */,
+				799251CD2F5FD91600012D6E /* ARCHITECTURE.md */,
+				799251C92F5FD8BC00012D6E /* CONTEXT.md */,
+				799251C72F5FD44D00012D6E /* AdviceFormatter.swift */,
+				799251C52F5FD44300012D6E /* WeatherAdviceEngine.swift */,
+				799251C32F5FD43700012D6E /* WeatherAdvice.swift */,
+				799251C12F5FD12A00012D6E /* Config.swift */,
+				799251BF2F5FD11F00012D6E /* WeatherService.swift */,
+				799251BD2F5FD10D00012D6E /* WeatherData.swift */,
 				7981C0812F5F528800979365 /* SettingsView.swift */,
 				7981C07D2F5F525800979365 /* HomeView.swift */,
 				7981C07F2F5F527A00979365 /* ChatView.swift */,
@@ -121,6 +151,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				799251D02F5FD92E00012D6E /* BACKLOG.md in Resources */,
+				799251D42F5FDB1A00012D6E /* SPEC.md in Resources */,
+				799251CA2F5FD8C800012D6E /* CONTEXT.md in Resources */,
+				799251CE2F5FD92000012D6E /* ARCHITECTURE.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -134,6 +168,12 @@
 				7981C0822F5F528D00979365 /* SettingsView.swift in Sources */,
 				7981C0802F5F527E00979365 /* ChatView.swift in Sources */,
 				7981C07E2F5F526900979365 /* HomeView.swift in Sources */,
+				799251C62F5FD44900012D6E /* WeatherAdviceEngine.swift in Sources */,
+				799251BE2F5FD11C00012D6E /* WeatherData.swift in Sources */,
+				799251C42F5FD43F00012D6E /* WeatherAdvice.swift in Sources */,
+				799251C82F5FD45300012D6E /* AdviceFormatter.swift in Sources */,
+				799251C22F5FD12F00012D6E /* Config.swift in Sources */,
+				799251C02F5FD12500012D6E /* WeatherService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
