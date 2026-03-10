@@ -15,10 +15,12 @@ struct WeatherInfo: Decodable {
 struct MainInfo: Decodable {
     let temp: Double
     let feelsLike: Double
+    let humidity: Int
 
     enum CodingKeys: String, CodingKey {
         case temp
         case feelsLike = "feels_like"
+        case humidity
     }
 }
 
