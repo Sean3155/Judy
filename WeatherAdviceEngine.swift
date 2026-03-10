@@ -5,10 +5,14 @@ struct WeatherAdviceEngine {
     static func generateAdvice(from weather: WeatherResponse) -> WeatherAdvice {
         let temp = weather.main.temp
         let feelsLike = weather.main.feelsLike
+        let humidity = weather.main.humidity
         let windSpeed = weather.wind.speed
         let description = weather.weather.first?.description.lowercased() ?? ""
         
-        let comfort = determineComfortLevel(feelsLike: feelsLike)
+        let comfort = determineComfortLevel(
+            feelsLike: feelsLike,
+            humidity: humidity
+        )
         let windImpact = determineWindImpact(windSpeed: windSpeed)
         let rainImpact = determineRainImpact(description: description)
         
@@ -34,6 +38,7 @@ struct WeatherAdviceEngine {
         
         let comfortNote = generateComfortNote(
             feelsLike: feelsLike,
+            humidity: humidity,
             windImpact: windImpact,
             rainImpact: rainImpact
         )
@@ -66,8 +71,21 @@ struct WeatherAdviceEngine {
 // MARK: - Core Logic
 private extension WeatherAdviceEngine {
     
-    static func determineComfortLevel(feelsLike: Double) -> ComfortLevel {
-        switch feelsLike {
+    static func determineComfortLevel(
+        feelsLike: Double,
+        humidity: Int
+    ) -> ComfortLevel {
+        var adjustedFeelsLike = feelsLike
+
+        if humidity >= 75 && feelsLike >= 22 {
+            adjustedFeelsLike += 2
+        }
+
+        if humidity <= 30 && feelsLike <= 8 {
+            adjustedFeelsLike -= 2
+        }
+
+        switch adjustedFeelsLike {
         case ..<0:
             return .freezing
         case 0..<8:
@@ -82,7 +100,7 @@ private extension WeatherAdviceEngine {
             return .hot
         }
     }
-    
+
     static func determineWindImpact(windSpeed: Double) -> WindImpactLevel {
         switch windSpeed {
         case ..<3:
@@ -206,11 +224,20 @@ private extension WeatherAdviceEngine {
     
     static func generateComfortNote(
         feelsLike: Double,
+        humidity: Int,
         windImpact: WindImpactLevel,
         rainImpact: RainImpactLevel
     ) -> String {
         if rainImpact == .moderate || rainImpact == .heavy {
             return "A short trip may be fine, but staying outside for long could get uncomfortable fast."
+        }
+
+        if humidity >= 75 && feelsLike >= 22 {
+            return "It may feel warmer and a bit sticky because humidity is high."
+        }
+
+        if humidity <= 30 && feelsLike <= 8 {
+            return "Dry air can make this feel a little colder than expected."
         }
         
         if feelsLike < 8 && windImpact == .high {
