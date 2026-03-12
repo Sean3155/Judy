@@ -20,6 +20,7 @@
 		799251CE2F5FD92000012D6E /* ARCHITECTURE.md in Resources */ = {isa = PBXBuildFile; fileRef = 799251CD2F5FD91600012D6E /* ARCHITECTURE.md */; };
 		799251D02F5FD92E00012D6E /* BACKLOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 799251CF2F5FD92800012D6E /* BACKLOG.md */; };
 		799251D42F5FDB1A00012D6E /* SPEC.md in Resources */ = {isa = PBXBuildFile; fileRef = 799251D32F5FDB1400012D6E /* SPEC.md */; };
+		799251E82F633D7F00012D6E /* LocalConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799251E72F633D7700012D6E /* LocalConfig.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		799251CD2F5FD91600012D6E /* ARCHITECTURE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ARCHITECTURE.md; sourceTree = "<group>"; };
 		799251CF2F5FD92800012D6E /* BACKLOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = BACKLOG.md; sourceTree = "<group>"; };
 		799251D32F5FDB1400012D6E /* SPEC.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = SPEC.md; sourceTree = "<group>"; };
+		799251E72F633D7700012D6E /* LocalConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalConfig.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -61,6 +63,7 @@
 		7981C0662F5F515500979365 = {
 			isa = PBXGroup;
 			children = (
+				799251E72F633D7700012D6E /* LocalConfig.swift */,
 				799251D32F5FDB1400012D6E /* SPEC.md */,
 				799251CF2F5FD92800012D6E /* BACKLOG.md */,
 				799251CD2F5FD91600012D6E /* ARCHITECTURE.md */,
@@ -172,6 +175,7 @@
 				799251BE2F5FD11C00012D6E /* WeatherData.swift in Sources */,
 				799251C42F5FD43F00012D6E /* WeatherAdvice.swift in Sources */,
 				799251C82F5FD45300012D6E /* AdviceFormatter.swift in Sources */,
+				799251E82F633D7F00012D6E /* LocalConfig.swift in Sources */,
 				799251C22F5FD12F00012D6E /* Config.swift in Sources */,
 				799251C02F5FD12500012D6E /* WeatherService.swift in Sources */,
 			);
