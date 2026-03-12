@@ -3,7 +3,6 @@ import Foundation
 struct WeatherAdviceEngine {
     
     static func generateAdvice(from weather: WeatherResponse) -> WeatherAdvice {
-        let temp = weather.main.temp
         let feelsLike = weather.main.feelsLike
         let humidity = weather.main.humidity
         let windSpeed = weather.wind.speed
@@ -18,7 +17,6 @@ struct WeatherAdviceEngine {
         let rainImpact = determineRainImpact(description: description)
         
         let clothing = generateClothingRecommendations(
-            temp: temp,
             feelsLike: feelsLike,
             humidity: humidity,
             windSpeed: windSpeed,
@@ -74,7 +72,7 @@ struct WeatherAdviceEngine {
             rainImpact: rainImpact,
             windGust: windGust
         )
-        
+
         return WeatherAdvice(
             comfortLevel: comfort,
             windImpact: windImpact,
@@ -150,7 +148,6 @@ private extension WeatherAdviceEngine {
     }
     
     static func generateClothingRecommendations(
-        temp: Double,
         feelsLike: Double,
         humidity: Int,
         windSpeed: Double,
@@ -247,6 +244,8 @@ private extension WeatherAdviceEngine {
         rainImpact: RainImpactLevel
     ) -> String {
         switch (comfort, windImpact, rainImpact) {
+        case (.freezing, _, _):
+            return "This is a genuinely cold day, so dress for warmth first."
         case (.cold, .high, .none), (.cool, .high, .none):
             return "Not brutally cold, but the wind can make it pretty uncomfortable."
         case (.mild, .low, .none), (.warm, .low, .none):
