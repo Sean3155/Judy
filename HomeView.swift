@@ -67,6 +67,7 @@ struct HomeView: View {
         }
     }
     
+    @MainActor
     private func loadWeather() async {
         isLoading = true
         errorMessage = nil
