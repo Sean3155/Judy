@@ -34,4 +34,5 @@ struct WeatherAdvice {
     
     let isGoodForShortWalk: Bool
     let isGoodForLongWalk: Bool
+    let walkComfortScore: Int
 }
