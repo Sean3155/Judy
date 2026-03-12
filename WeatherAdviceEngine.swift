@@ -67,6 +67,14 @@ struct WeatherAdviceEngine {
             walkComfortScore: walkComfortScore
         )
 
+        let walkComfortScore = calculateWalkComfortScore(
+            feelsLike: feelsLike,
+            humidity: humidity,
+            windImpact: windImpact,
+            rainImpact: rainImpact,
+            windGust: windGust
+        )
+        
         return WeatherAdvice(
             comfortLevel: comfort,
             windImpact: windImpact,
