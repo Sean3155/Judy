@@ -65,6 +65,14 @@ struct WeatherAdviceEngine {
             walkComfortScore: walkComfortScore
         )
 
+        let walkComfortScore = calculateWalkComfortScore(
+            feelsLike: feelsLike,
+            humidity: humidity,
+            windImpact: windImpact,
+            rainImpact: rainImpact,
+            windGust: windGust
+        )
+
         return WeatherAdvice(
             comfortLevel: comfort,
             windImpact: windImpact,
@@ -248,6 +256,8 @@ private extension WeatherAdviceEngine {
             return "Wet conditions are likely to be the main comfort issue today."
         case (_, _, .light):
             return "Light rain may be manageable, but coverage will still help."
+        case (.freezing, _, _):
+            return "This is a genuinely cold day, so dress for warmth first."
         default:
             return "Conditions are manageable, but small details may affect comfort."
         }
