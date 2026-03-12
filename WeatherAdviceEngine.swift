@@ -20,6 +20,7 @@ struct WeatherAdviceEngine {
         let clothing = generateClothingRecommendations(
             temp: temp,
             feelsLike: feelsLike,
+            humidity: humidity,
             windSpeed: windSpeed,
             rainImpact: rainImpact
         )
@@ -45,15 +46,25 @@ struct WeatherAdviceEngine {
             rainImpact: rainImpact
         )
         
+        let walkComfortScore = calculateWalkComfortScore(
+            feelsLike: feelsLike,
+            humidity: humidity,
+            windImpact: windImpact,
+            rainImpact: rainImpact,
+            windGust: windGust
+        )
+
         let shortWalkOkay = isGoodForShortWalk(
             feelsLike: feelsLike,
-            rainImpact: rainImpact
+            rainImpact: rainImpact,
+            walkComfortScore: walkComfortScore
         )
         
         let longWalkOkay = isGoodForLongWalk(
             feelsLike: feelsLike,
             windImpact: windImpact,
-            rainImpact: rainImpact
+            rainImpact: rainImpact,
+            walkComfortScore: walkComfortScore
         )
 
         let walkComfortScore = calculateWalkComfortScore(
@@ -124,15 +135,14 @@ private extension WeatherAdviceEngine {
     }
     
     static func determineRainImpact(description: String) -> RainImpactLevel {
-        if description.contains("thunderstorm") {
+        if description.contains("thunderstorm")
+            || description.contains("very heavy rain")
+            || description.contains("extreme rain")
+            || description.contains("heavy intensity rain") {
             return .heavy
-        } else if description.contains("heavy rain") {
-            return .heavy
-        } else if description.contains("rain") {
-            return .moderate
-        } else if description.contains("drizzle") {
+        } else if description.contains("light rain") || description.contains("drizzle") {
             return .light
-        } else if description.contains("snow") {
+        } else if description.contains("rain") || description.contains("snow") {
             return .moderate
         } else {
             return .none
@@ -142,6 +152,7 @@ private extension WeatherAdviceEngine {
     static func generateClothingRecommendations(
         temp: Double,
         feelsLike: Double,
+        humidity: Int,
         windSpeed: Double,
         rainImpact: RainImpactLevel
     ) -> [String] {
@@ -171,12 +182,17 @@ private extension WeatherAdviceEngine {
             items.append("avoid loose outfits if you care about fit")
         }
         
-        if rainImpact == .moderate || rainImpact == .heavy {
+        if rainImpact == .heavy {
+            items.append("waterproof outer layer")
+            items.append("umbrella")
+        } else if rainImpact == .moderate {
             items.append("water-resistant outer layer")
-        }
-        
-        if rainImpact == .light {
+        } else if rainImpact == .light {
             items.append("consider a light umbrella")
+        }
+
+        if humidity >= 80 && feelsLike >= 22 {
+            items.append("breathable clothing")
         }
         
         return items
@@ -204,8 +220,10 @@ private extension WeatherAdviceEngine {
         
         if rainImpact == .light {
             cautions.append("light rain may still be annoying without coverage")
-        } else if rainImpact == .moderate || rainImpact == .heavy {
+        } else if rainImpact == .moderate {
             cautions.append("getting wet is likely if you stay outside")
+        } else if rainImpact == .heavy {
+            cautions.append("heavy rain can make outdoor activity uncomfortable")
         }
         
         if feelsLike < 5 {
@@ -214,6 +232,10 @@ private extension WeatherAdviceEngine {
         
         if description.contains("snow") {
             cautions.append("watch for slippery ground")
+        }
+
+        if rainImpact == .heavy && feelsLike <= 2 {
+            cautions.append("cold and wet conditions can feel especially harsh")
         }
         
         return cautions
@@ -229,8 +251,12 @@ private extension WeatherAdviceEngine {
             return "Not brutally cold, but the wind can make it pretty uncomfortable."
         case (.mild, .low, .none), (.warm, .low, .none):
             return "Overall, this is fairly comfortable weather."
-        case (_, _, .moderate), (_, _, .heavy):
-            return "The main issue today is less the temperature and more the wet conditions."
+        case (_, _, .heavy):
+            return "Heavy rain is the main issue today and will likely make outside plans uncomfortable."
+        case (_, _, .moderate):
+            return "Wet conditions are likely to be the main comfort issue today."
+        case (_, _, .light):
+            return "Light rain may be manageable, but coverage will still help."
         case (.freezing, _, _):
             return "This is a genuinely cold day, so dress for warmth first."
         default:
@@ -318,19 +344,22 @@ private extension WeatherAdviceEngine {
 
     static func isGoodForShortWalk(
         feelsLike: Double,
-        rainImpact: RainImpactLevel
+        rainImpact: RainImpactLevel,
+        walkComfortScore: Int
     ) -> Bool {
-        return feelsLike > -5 && rainImpact != .heavy
+        return feelsLike > -8 && rainImpact != .heavy && walkComfortScore >= 35
     }
     
     static func isGoodForLongWalk(
         feelsLike: Double,
         windImpact: WindImpactLevel,
-        rainImpact: RainImpactLevel
+        rainImpact: RainImpactLevel,
+        walkComfortScore: Int
     ) -> Bool {
         if feelsLike < 5 { return false }
         if windImpact == .high { return false }
         if rainImpact == .moderate || rainImpact == .heavy { return false }
+        if walkComfortScore < 60 { return false }
         return true
     }
 }
