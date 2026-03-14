@@ -205,6 +205,94 @@ private enum LocationError: LocalizedError {
     }
 }
 
+private final class LocationService: NSObject, CLLocationManagerDelegate {
+    private let manager = CLLocationManager()
+    private var authorizationContinuation: CheckedContinuation<Void, Error>?
+    private var locationContinuation: CheckedContinuation<CLLocationCoordinate2D, Error>?
+
+    override init() {
+        super.init()
+        manager.delegate = self
+        manager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+    }
+
+    @MainActor
+    func requestCurrentLocation() async throws -> CLLocationCoordinate2D {
+        guard CLLocationManager.locationServicesEnabled() else {
+            throw LocationError.servicesDisabled
+        }
+
+        switch manager.authorizationStatus {
+        case .authorizedWhenInUse, .authorizedAlways:
+            break
+        case .notDetermined:
+            try await requestAuthorization()
+        case .denied, .restricted:
+            throw LocationError.permissionDenied
+        @unknown default:
+            throw LocationError.permissionDenied
+        }
+
+        return try await withCheckedThrowingContinuation { continuation in
+            self.locationContinuation = continuation
+            self.manager.requestLocation()
+        }
+    }
+
+    @MainActor
+    private func requestAuthorization() async throws {
+        try await withCheckedThrowingContinuation { continuation in
+            self.authorizationContinuation = continuation
+            self.manager.requestWhenInUseAuthorization()
+        }
+    }
+
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        guard let continuation = authorizationContinuation else { return }
+
+        switch manager.authorizationStatus {
+        case .authorizedWhenInUse, .authorizedAlways:
+            authorizationContinuation = nil
+            continuation.resume()
+        case .denied, .restricted:
+            authorizationContinuation = nil
+            continuation.resume(throwing: LocationError.permissionDenied)
+        case .notDetermined:
+            break
+        @unknown default:
+            authorizationContinuation = nil
+            continuation.resume(throwing: LocationError.permissionDenied)
+        }
+    }
+
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let coordinate = locations.first?.coordinate,
+              let continuation = locationContinuation else { return }
+        locationContinuation = nil
+        continuation.resume(returning: coordinate)
+    }
+
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        guard let continuation = locationContinuation else { return }
+        locationContinuation = nil
+        continuation.resume(throwing: error)
+    }
+}
+
+private enum LocationError: LocalizedError {
+    case servicesDisabled
+    case permissionDenied
+
+    var errorDescription: String? {
+        switch self {
+        case .servicesDisabled:
+            return "Location services are disabled. Please enable them to load local weather."
+        case .permissionDenied:
+            return "Location permission is needed to fetch weather for your current position."
+        }
+    }
+}
+
 #Preview {
     HomeView()
         .environmentObject(WeatherSnapshotStore())
