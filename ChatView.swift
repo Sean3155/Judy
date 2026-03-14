@@ -89,7 +89,7 @@ private struct ChatBubble: View {
 
     private var bubble: some View {
         Text(message.text)
-            .foregroundStyle(message.role == .assistant ? Color.primary : Color.white)
+            .foregroundStyle(message.role == .assistant ? .primary : .white)
             .padding(.horizontal, 14)
             .padding(.vertical, 10)
             .background(message.role == .assistant ? Color(.secondarySystemBackground) : Color.accentColor)
