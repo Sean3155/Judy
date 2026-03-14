@@ -25,6 +25,7 @@
 		A1B2C3D4E5F60718293A0003 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293B0003 /* ChatViewModel.swift */; };
 		A1B2C3D4E5F60718293A0004 /* SupabaseChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293B0004 /* SupabaseChatService.swift */; };
 		A1B2C3D4E5F60718293A0005 /* WeatherSnapshotStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293B0005 /* WeatherSnapshotStore.swift */; };
+		A1B2C3D4E5F60718293A0006 /* WeatherContextResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293B0006 /* WeatherContextResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +48,7 @@
 		A1B2C3D4E5F60718293B0003 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F60718293B0004 /* SupabaseChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseChatService.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F60718293B0005 /* WeatherSnapshotStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherSnapshotStore.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60718293B0006 /* WeatherContextResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherContextResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -90,6 +92,7 @@
 				A1B2C3D4E5F60718293B0003 /* ChatViewModel.swift */,
 				A1B2C3D4E5F60718293B0004 /* SupabaseChatService.swift */,
 				A1B2C3D4E5F60718293B0005 /* WeatherSnapshotStore.swift */,
+				A1B2C3D4E5F60718293B0006 /* WeatherContextResponse.swift */,
 				7981C0712F5F515500979365 /* Judy */,
 				7981C0702F5F515500979365 /* Products */,
 			);
@@ -188,6 +191,7 @@
 				A1B2C3D4E5F60718293A0003 /* ChatViewModel.swift in Sources */,
 				A1B2C3D4E5F60718293A0004 /* SupabaseChatService.swift in Sources */,
 				A1B2C3D4E5F60718293A0005 /* WeatherSnapshotStore.swift in Sources */,
+				A1B2C3D4E5F60718293A0006 /* WeatherContextResponse.swift in Sources */,
 				7981C07E2F5F526900979365 /* HomeView.swift in Sources */,
 				799251C62F5FD44900012D6E /* WeatherAdviceEngine.swift in Sources */,
 				799251BE2F5FD11C00012D6E /* WeatherData.swift in Sources */,

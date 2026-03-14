@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ChatView: View {
     @ObservedObject var viewModel: ChatViewModel
+    @FocusState private var isInputFocused: Bool
 
     var body: some View {
         NavigationStack {
@@ -28,6 +29,11 @@ struct ChatView: View {
                         }
                         .padding(.vertical)
                     }
+                    .scrollDismissesKeyboard(.interactively)
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        isInputFocused = false
+                    }
                     .onChange(of: viewModel.messages.count) {
                         scrollToBottom(proxy: proxy)
                     }
@@ -37,8 +43,12 @@ struct ChatView: View {
 
                     ChatInputBar(
                         text: $viewModel.draftMessage,
+                        isFocused: $isInputFocused,
                         isSending: viewModel.isSending,
-                        onSend: { viewModel.sendCurrentDraft() }
+                        onSend: {
+                            isInputFocused = false
+                            viewModel.sendCurrentDraft()
+                        }
                     )
                     .padding(.horizontal)
                     .padding(.vertical, 10)
@@ -47,6 +57,9 @@ struct ChatView: View {
             }
             .navigationTitle("Chat")
             .background(Color(.systemBackground))
+            .onDisappear {
+                isInputFocused = false
+            }
         }
     }
 
@@ -86,6 +99,7 @@ private struct ChatBubble: View {
 
 private struct ChatInputBar: View {
     @Binding var text: String
+    @FocusState.Binding var isFocused: Bool
     let isSending: Bool
     let onSend: () -> Void
 
@@ -94,6 +108,7 @@ private struct ChatInputBar: View {
             TextField("Ask Judy about the weather…", text: $text, axis: .vertical)
                 .textFieldStyle(.plain)
                 .lineLimit(1...4)
+                .focused($isFocused)
                 .padding(10)
                 .background(Color(.secondarySystemBackground))
                 .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
