@@ -5,24 +5,51 @@ import ObjectiveC
 
 enum Config {
     static var openWeatherAPIKey: String {
-        if let localKey = localConfigAPIKey, !localKey.isEmpty {
-            return localKey
-        }
-
-        if let environmentKey = ProcessInfo.processInfo.environment["OPENWEATHER_API_KEY"],
-           !environmentKey.isEmpty {
-            return environmentKey
-        }
-
-        return "YOUR_OPENWEATHER_API_KEY"
+        configValue(
+            localSelector: "openWeatherAPIKey",
+            environmentKey: "OPENWEATHER_API_KEY",
+            fallback: "YOUR_OPENWEATHER_API_KEY"
+        )
     }
 
-    private static var localConfigAPIKey: String? {
+    static var supabaseProjectURL: String {
+        configValue(
+            localSelector: "supabaseProjectURL",
+            environmentKey: "SUPABASE_PROJECT_URL",
+            fallback: "YOUR_SUPABASE_PROJECT_URL"
+        )
+    }
+
+    static var supabaseAnonKey: String {
+        configValue(
+            localSelector: "supabaseAnonKey",
+            environmentKey: "SUPABASE_ANON_KEY",
+            fallback: "YOUR_SUPABASE_ANON_KEY"
+        )
+    }
+
+    private static func configValue(
+        localSelector: String,
+        environmentKey: String,
+        fallback: String
+    ) -> String {
+        if let local = localConfigValue(for: localSelector), !local.isEmpty {
+            return local
+        }
+
+        if let environmentValue = ProcessInfo.processInfo.environment[environmentKey],
+           !environmentValue.isEmpty {
+            return environmentValue
+        }
+
+        return fallback
+    }
+
+    private static func localConfigValue(for selector: String) -> String? {
         #if canImport(ObjectiveC)
         guard let localConfigClass = NSClassFromString("LocalConfig") as? NSObject.Type,
-              localConfigClass.responds(to: NSSelectorFromString("openWeatherAPIKey")),
-              let value = localConfigClass.perform(NSSelectorFromString("openWeatherAPIKey"))?
-                .takeUnretainedValue() as? String else {
+              localConfigClass.responds(to: NSSelectorFromString(selector)),
+              let value = localConfigClass.perform(NSSelectorFromString(selector))?.takeUnretainedValue() as? String else {
             return nil
         }
 

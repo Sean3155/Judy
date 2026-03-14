@@ -1,4 +1,7 @@
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 final class WeatherService {
     func fetchWeather(latitude: Double, longitude: Double) async throws -> WeatherResponse {

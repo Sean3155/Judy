@@ -6,6 +6,8 @@ struct HomeView: View {
     @State private var isLoading = false
     @State private var errorMessage: String?
 
+    @EnvironmentObject private var weatherSnapshotStore: WeatherSnapshotStore
+
     private let weatherService = WeatherService()
     private let locationService = LocationService()
 
@@ -77,12 +79,17 @@ struct HomeView: View {
 
         do {
             let coordinate = try await locationService.requestCurrentLocation()
-            weather = try await weatherService.fetchWeather(
+            let fetchedWeather = try await weatherService.fetchWeather(
                 latitude: coordinate.latitude,
                 longitude: coordinate.longitude
             )
+            weather = fetchedWeather
+
+            let advice = WeatherAdviceEngine.generateAdvice(from: fetchedWeather)
+            weatherSnapshotStore.update(with: fetchedWeather, advice: advice)
         } catch {
             errorMessage = error.localizedDescription
+            weatherSnapshotStore.clear()
         }
 
         isLoading = false
@@ -179,4 +186,5 @@ private enum LocationError: LocalizedError {
 
 #Preview {
     HomeView()
+        .environmentObject(WeatherSnapshotStore())
 }
