@@ -17,6 +17,7 @@ struct HomeView: View {
                 } else if let weather = weather {
                     let advice = WeatherAdviceEngine.generateAdvice(from: weather)
                     let adviceText = AdviceFormatter.homeCardText(from: advice)
+                    let apparentTemperature = Int(advice.apparentTemperatureC.rounded())
 
                     Image(systemName: "cloud.sun.fill")
                         .font(.system(size: 60))
@@ -28,7 +29,7 @@ struct HomeView: View {
                     Text("\(Int(weather.main.temp))°C")
                         .font(.system(size: 48, weight: .bold))
 
-                    Text("Feels like \(Int(weather.main.feelsLike))°C")
+                    Text("Feels like \(apparentTemperature)°C")
                         .font(.title3)
                         .foregroundStyle(.secondary)
 

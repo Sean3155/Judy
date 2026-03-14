@@ -3,10 +3,18 @@ import Foundation
 struct WeatherAdviceEngine {
     
     static func generateAdvice(from weather: WeatherResponse) -> WeatherAdvice {
-        let feelsLike = weather.main.feelsLike
+        let temp = weather.main.temp
         let humidity = weather.main.humidity
         let windSpeed = weather.wind.speed
         let windGust = weather.wind.gust
+
+        let apparentTemperature = calculateJudyApparentTemperature(
+            tempC: temp,
+            humidity: humidity,
+            windSpeedMS: windSpeed,
+            windGustMS: windGust
+        )
+        let feelsLike = apparentTemperature
         let description = weather.weather.first?.description.lowercased() ?? ""
         
         let comfort = determineComfortLevel(
@@ -73,6 +81,7 @@ struct WeatherAdviceEngine {
             cautions: cautions,
             summary: summary,
             comfortNote: comfortNote,
+            apparentTemperatureC: apparentTemperature,
             isGoodForShortWalk: shortWalkOkay,
             isGoodForLongWalk: longWalkOkay,
             walkComfortScore: walkComfortScore
@@ -83,6 +92,43 @@ struct WeatherAdviceEngine {
 // MARK: - Core Logic
 private extension WeatherAdviceEngine {
     
+    static func calculateJudyApparentTemperature(
+        tempC: Double,
+        humidity: Int?,
+        windSpeedMS: Double?,
+        windGustMS: Double?
+    ) -> Double {
+        let wind = max(0, windSpeedMS ?? 0)
+        let gust = max(0, windGustMS ?? wind)
+        let effectiveWind = max(wind, min(gust, wind + 4.0))
+        let effectiveWindKmh = effectiveWind * 3.6
+
+        let apparent: Double
+
+        if tempC <= 10, effectiveWindKmh >= 4.8 {
+            apparent =
+                13.12
+                + 0.6215 * tempC
+                - 11.37 * pow(effectiveWindKmh, 0.16)
+                + 0.3965 * tempC * pow(effectiveWindKmh, 0.16)
+        } else if tempC >= 20 {
+            let h = humidity ?? 0
+            if h >= 85 {
+                apparent = tempC + 2.0
+            } else if h >= 70 {
+                apparent = tempC + 1.0
+            } else {
+                apparent = tempC
+            }
+        } else {
+            apparent = tempC
+        }
+
+        let lowerBound = tempC - 20.0
+        let upperBound = tempC + 5.0
+        return min(max(apparent, lowerBound), upperBound)
+    }
+
     static func determineComfortLevel(
         feelsLike: Double,
         humidity: Int
