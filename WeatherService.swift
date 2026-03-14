@@ -8,8 +8,7 @@ final class WeatherService {
         let baseURL = Config.supabaseProjectURL.trimmingCharacters(in: .whitespacesAndNewlines)
         let anonKey = Config.supabaseAnonKey.trimmingCharacters(in: .whitespacesAndNewlines)
 
-        guard !baseURL.isEmpty, !anonKey.isEmpty,
-              !baseURL.contains("YOUR_SUPABASE") else {
+        guard !baseURL.isEmpty, !anonKey.isEmpty else {
             throw URLError(.userAuthenticationRequired)
         }
 
