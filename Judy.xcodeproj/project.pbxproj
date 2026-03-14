@@ -20,6 +20,11 @@
 		799251CE2F5FD92000012D6E /* ARCHITECTURE.md in Resources */ = {isa = PBXBuildFile; fileRef = 799251CD2F5FD91600012D6E /* ARCHITECTURE.md */; };
 		799251D02F5FD92E00012D6E /* BACKLOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 799251CF2F5FD92800012D6E /* BACKLOG.md */; };
 		799251D42F5FDB1A00012D6E /* SPEC.md in Resources */ = {isa = PBXBuildFile; fileRef = 799251D32F5FDB1400012D6E /* SPEC.md */; };
+		A1B2C3D4E5F60718293A0001 /* ChatRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293B0001 /* ChatRole.swift */; };
+		A1B2C3D4E5F60718293A0002 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293B0002 /* ChatMessage.swift */; };
+		A1B2C3D4E5F60718293A0003 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293B0003 /* ChatViewModel.swift */; };
+		A1B2C3D4E5F60718293A0004 /* SupabaseChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293B0004 /* SupabaseChatService.swift */; };
+		A1B2C3D4E5F60718293A0005 /* WeatherSnapshotStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293B0005 /* WeatherSnapshotStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +42,11 @@
 		799251CD2F5FD91600012D6E /* ARCHITECTURE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ARCHITECTURE.md; sourceTree = "<group>"; };
 		799251CF2F5FD92800012D6E /* BACKLOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = BACKLOG.md; sourceTree = "<group>"; };
 		799251D32F5FDB1400012D6E /* SPEC.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = SPEC.md; sourceTree = "<group>"; };
+		A1B2C3D4E5F60718293B0001 /* ChatRole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRole.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60718293B0002 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60718293B0003 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60718293B0004 /* SupabaseChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseChatService.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60718293B0005 /* WeatherSnapshotStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherSnapshotStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -74,6 +84,11 @@
 				7981C0812F5F528800979365 /* SettingsView.swift */,
 				7981C07D2F5F525800979365 /* HomeView.swift */,
 				7981C07F2F5F527A00979365 /* ChatView.swift */,
+				A1B2C3D4E5F60718293B0001 /* ChatRole.swift */,
+				A1B2C3D4E5F60718293B0002 /* ChatMessage.swift */,
+				A1B2C3D4E5F60718293B0003 /* ChatViewModel.swift */,
+				A1B2C3D4E5F60718293B0004 /* SupabaseChatService.swift */,
+				A1B2C3D4E5F60718293B0005 /* WeatherSnapshotStore.swift */,
 				7981C0712F5F515500979365 /* Judy */,
 				7981C0702F5F515500979365 /* Products */,
 			);
@@ -167,6 +182,11 @@
 			files = (
 				7981C0822F5F528D00979365 /* SettingsView.swift in Sources */,
 				7981C0802F5F527E00979365 /* ChatView.swift in Sources */,
+				A1B2C3D4E5F60718293A0001 /* ChatRole.swift in Sources */,
+				A1B2C3D4E5F60718293A0002 /* ChatMessage.swift in Sources */,
+				A1B2C3D4E5F60718293A0003 /* ChatViewModel.swift in Sources */,
+				A1B2C3D4E5F60718293A0004 /* SupabaseChatService.swift in Sources */,
+				A1B2C3D4E5F60718293A0005 /* WeatherSnapshotStore.swift in Sources */,
 				7981C07E2F5F526900979365 /* HomeView.swift in Sources */,
 				799251C62F5FD44900012D6E /* WeatherAdviceEngine.swift in Sources */,
 				799251BE2F5FD11C00012D6E /* WeatherData.swift in Sources */,
@@ -309,6 +329,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Judy;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Judy uses your location to fetch accurate local weather by latitude and longitude.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -341,6 +362,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Judy;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Judy uses your location to fetch accurate local weather by latitude and longitude.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
