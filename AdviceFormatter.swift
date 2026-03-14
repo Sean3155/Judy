@@ -22,6 +22,8 @@ struct AdviceFormatter {
             parts.append(cautionLine)
         }
         
+        parts.append("Walk comfort score: \(advice.walkComfortScore)/100.")
+
         let walkLine = advice.isGoodForLongWalk
             ? "Longer walks should be pretty manageable."
             : (advice.isGoodForShortWalk
