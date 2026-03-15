@@ -1,23 +1,40 @@
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 final class WeatherService {
-    func fetchWeather(for city: String) async throws -> WeatherResponse {
-        let encodedCity = city.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? city
-        
-        let urlString = "https://api.openweathermap.org/data/2.5/weather?q=\(encodedCity)&appid=\(Config.openWeatherAPIKey)&units=metric"
-        
-        guard let url = URL(string: urlString) else {
+    func fetchWeatherContext(latitude: Double, longitude: Double) async throws -> WeatherContextResponse {
+        let baseURL = Config.supabaseProjectURL.trimmingCharacters(in: .whitespacesAndNewlines)
+        let anonKey = Config.supabaseAnonKey.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        guard !baseURL.isEmpty, !anonKey.isEmpty else {
+            throw URLError(.userAuthenticationRequired)
+        }
+
+        guard let url = URL(string: "\(baseURL)/functions/v1/weather-context") else {
             throw URLError(.badURL)
         }
-        
-        let (data, response) = try await URLSession.shared.data(from: url)
-        
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue(anonKey, forHTTPHeaderField: "apikey")
+        request.setValue("Bearer \(anonKey)", forHTTPHeaderField: "Authorization")
+
+        let payload: [String: Double] = [
+            "latitude": latitude,
+            "longitude": longitude,
+        ]
+        request.httpBody = try JSONSerialization.data(withJSONObject: payload)
+
+        let (data, response) = try await URLSession.shared.data(for: request)
+
         guard let httpResponse = response as? HTTPURLResponse,
               200..<300 ~= httpResponse.statusCode else {
             throw URLError(.badServerResponse)
         }
-        
-        let decoder = JSONDecoder()
-        return try decoder.decode(WeatherResponse.self, from: data)
+
+        return try JSONDecoder().decode(WeatherContextResponse.self, from: data)
     }
 }
