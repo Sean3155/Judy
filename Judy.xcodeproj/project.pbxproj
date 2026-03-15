@@ -51,9 +51,22 @@
 		A1B2C3D4E5F60718293B0006 /* WeatherContextResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherContextResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		799252202F6739CC00012D6E /* Exceptions for "Judy" folder in "Judy" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 7981C06E2F5F515500979365 /* Judy */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		7981C0712F5F515500979365 /* Judy */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				799252202F6739CC00012D6E /* Exceptions for "Judy" folder in "Judy" target */,
+			);
 			path = Judy;
 			sourceTree = "<group>";
 		};
@@ -330,8 +343,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = FQPCB28Z2G;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Judy/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Judy;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Judy uses your location to fetch accurate local weather by latitude and longitude.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -363,8 +378,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = FQPCB28Z2G;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Judy/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Judy;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Judy uses your location to fetch accurate local weather by latitude and longitude.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
