@@ -26,6 +26,30 @@ private struct JudyChatResponse: Decodable {
     let reply: String
 }
 
+private struct JudyErrorResponse: Decodable {
+    let error: String
+}
+
+enum ChatServiceError: LocalizedError {
+    case missingConfiguration
+    case invalidURL
+    case unauthorized(message: String?)
+    case server(statusCode: Int, message: String?)
+
+    var errorDescription: String? {
+        switch self {
+        case .missingConfiguration:
+            return "Supabase chat configuration is missing."
+        case .invalidURL:
+            return "Supabase chat URL is invalid."
+        case .unauthorized(let message):
+            return message ?? "Chat request was not authorized."
+        case .server(_, let message):
+            return message ?? "Chat backend returned an error."
+        }
+    }
+}
+
 protocol ChatServicing {
     func sendChat(request: JudyChatRequest) async throws -> String
 }
@@ -36,11 +60,11 @@ final class SupabaseChatService: ChatServicing {
         let anonKey = Config.supabaseAnonKey.trimmingCharacters(in: .whitespacesAndNewlines)
 
         guard !baseURL.isEmpty, !anonKey.isEmpty else {
-            throw URLError(.userAuthenticationRequired)
+            throw ChatServiceError.missingConfiguration
         }
 
         guard let url = URL(string: "\(baseURL)/functions/v1/chat") else {
-            throw URLError(.badURL)
+            throw ChatServiceError.invalidURL
         }
 
         var urlRequest = URLRequest(url: url)
@@ -54,9 +78,19 @@ final class SupabaseChatService: ChatServicing {
 
         let (data, response) = try await URLSession.shared.data(for: urlRequest)
 
-        guard let httpResponse = response as? HTTPURLResponse,
-              200..<300 ~= httpResponse.statusCode else {
+        guard let httpResponse = response as? HTTPURLResponse else {
             throw URLError(.badServerResponse)
+        }
+
+        guard 200..<300 ~= httpResponse.statusCode else {
+            let backendError = try? JSONDecoder().decode(JudyErrorResponse.self, from: data)
+            let message = backendError?.error
+
+            if httpResponse.statusCode == 401 || httpResponse.statusCode == 403 {
+                throw ChatServiceError.unauthorized(message: message)
+            }
+
+            throw ChatServiceError.server(statusCode: httpResponse.statusCode, message: message)
         }
 
         let decoded = try JSONDecoder().decode(JudyChatResponse.self, from: data)

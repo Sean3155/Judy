@@ -57,10 +57,29 @@ final class ChatViewModel: ObservableObject {
         do {
             let reply = try await chatService.sendChat(request: request)
             appendAssistantMessage(reply)
+        } catch let chatError as ChatServiceError {
+            appendAssistantMessage(message(for: chatError))
         } catch {
             appendAssistantMessage("I hit a connection issue while checking the latest weather context. Please try again.")
         }
 
         isSending = false
+    }
+
+    private func message(for error: ChatServiceError) -> String {
+        switch error {
+        case .missingConfiguration:
+            return "I can’t chat yet because Supabase settings are missing in the app configuration."
+        case .invalidURL:
+            return "I can’t reach the chat backend because the server URL is invalid."
+        case .unauthorized:
+            return "I can’t reach chat right now due to an authorization issue with Supabase."
+        case .server(let statusCode, let message):
+            if let message, message.localizedCaseInsensitiveContains("OPENAI_API_KEY") {
+                return "Chat backend is online, but OPENAI_API_KEY is not configured in Supabase Edge Function secrets."
+            }
+
+            return "The chat backend returned an error (\(statusCode)). Please check Supabase function logs and try again."
+        }
     }
 }
