@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct JudyApp: App {
+    @StateObject private var authManager = AuthManager()
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(authManager: authManager)
+                .environmentObject(authManager)
         }
     }
 }

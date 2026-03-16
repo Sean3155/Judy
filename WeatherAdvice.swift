@@ -31,7 +31,9 @@ struct WeatherAdvice {
     let cautions: [String]
     let summary: String
     let comfortNote: String
+    let apparentTemperatureC: Double
     
     let isGoodForShortWalk: Bool
     let isGoodForLongWalk: Bool
+    let walkComfortScore: Int
 }
