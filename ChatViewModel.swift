@@ -72,6 +72,8 @@ final class ChatViewModel: ObservableObject {
             return "I can’t chat yet because Supabase settings are missing in the app configuration."
         case .invalidURL:
             return "I can’t reach the chat backend because the server URL is invalid."
+        case .missingAuthenticatedSession:
+            return "Your session appears to have expired. Please sign out and sign back in to use chat."
         case .unauthorized:
             return "I can’t reach chat right now due to an authorization issue with Supabase."
         case .server(let statusCode, let message):

@@ -33,6 +33,7 @@ private struct JudyErrorResponse: Decodable {
 enum ChatServiceError: LocalizedError {
     case missingConfiguration
     case invalidURL
+    case missingAuthenticatedSession
     case unauthorized(message: String?)
     case server(statusCode: Int, message: String?)
 
@@ -42,6 +43,8 @@ enum ChatServiceError: LocalizedError {
             return "Supabase chat configuration is missing."
         case .invalidURL:
             return "Supabase chat URL is invalid."
+        case .missingAuthenticatedSession:
+            return "A signed-in session is required for chat."
         case .unauthorized(let message):
             return message ?? "Chat request was not authorized."
         case .server(_, let message):
@@ -81,6 +84,13 @@ final class SupabaseChatService: ChatServicing {
         let accessToken = await authTokenProvider?.currentAccessToken()
         let sanitizedAccessToken = accessToken?.trimmingCharacters(in: .whitespacesAndNewlines)
         let hasAuthenticatedToken = !(sanitizedAccessToken?.isEmpty ?? true)
+
+        // If an auth token provider exists, we should never silently downgrade
+        // to anon for chat; that causes authorization drift when session refresh fails.
+        if authTokenProvider != nil, !hasAuthenticatedToken {
+            throw ChatServiceError.missingAuthenticatedSession
+        }
+
         let bearerToken = hasAuthenticatedToken ? sanitizedAccessToken! : anonKey
         let hasAPIKey = !anonKey.isEmpty
         print("[Auth] Chat header diagnostics - apikey present: \(hasAPIKey), authenticated token present: \(hasAuthenticatedToken), using authenticated chat context: \(hasAuthenticatedToken)")
