@@ -1,6 +1,19 @@
 import { serve } from "https://deno.land/std@0.224.0/http/server.ts";
 import { buildJudyMessages, type ChatInput } from "../_shared/judy_prompt_builder.ts";
 import { requestOpenAIReply } from "../_shared/openai_client.ts";
+import { parseDecisionFrame } from "../_shared/decision_frame_parser.ts";
+import {
+  authenticateUserFromRequest,
+  fetchRelevantMemoryItems,
+} from "../_shared/memory_repository.ts";
+import { buildMemoryPromptInjection } from "../_shared/memory_retrieval.ts";
+import { runAsyncMemoryLearning } from "../_shared/memory_async_pipeline.ts";
+
+declare const EdgeRuntime:
+  | {
+    waitUntil: (promise: Promise<unknown>) => void;
+  }
+  | undefined;
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -44,13 +57,47 @@ serve(async (req) => {
     ? payload.recent_messages.slice(-6)
     : [];
 
+  const normalizedInput: ChatInput = {
+    ...payload,
+    recent_messages: recentMessages,
+  };
+
+  const authContext = await authenticateUserFromRequest(req);
+  const decisionFrame = parseDecisionFrame(normalizedInput);
+
+  let memoryContext: string | null = null;
+  if (authContext.client && authContext.userId) {
+    const relevantMemories = await fetchRelevantMemoryItems(
+      authContext.client,
+      authContext.userId,
+      decisionFrame,
+      8,
+    );
+    memoryContext = buildMemoryPromptInjection(decisionFrame, relevantMemories);
+  }
+
   try {
-    const messages = buildJudyMessages({
-      ...payload,
-      recent_messages: recentMessages,
-    });
+    const messages = buildJudyMessages(normalizedInput, memoryContext ?? undefined);
 
     const reply = await requestOpenAIReply(openAiApiKey, messages);
+
+    if (authContext.client && authContext.userId) {
+      const learningPromise = runAsyncMemoryLearning({
+        client: authContext.client,
+        userId: authContext.userId,
+        input: normalizedInput,
+        assistantReply: reply,
+      }).catch((error) => {
+        console.error("memory async update failed", error);
+      });
+
+      if (typeof EdgeRuntime !== "undefined" && typeof EdgeRuntime.waitUntil === "function") {
+        EdgeRuntime.waitUntil(learningPromise);
+      } else {
+        void learningPromise;
+      }
+    }
+
     return json({ reply }, 200);
   } catch (error) {
     console.error("chat function error", error);

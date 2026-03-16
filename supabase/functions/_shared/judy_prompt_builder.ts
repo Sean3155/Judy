@@ -12,7 +12,7 @@ export interface ChatInput {
   recent_messages?: RecentMessage[];
 }
 
-export function buildJudyMessages(input: ChatInput) {
+export function buildJudyMessages(input: ChatInput, memoryContext?: string) {
   const compactHistory = (input.recent_messages ?? [])
     .slice(-6)
     .map((m) => ({ role: m.role, content: m.text.slice(0, 280) }));
@@ -42,5 +42,15 @@ export function buildJudyMessages(input: ChatInput) {
     content: input.user_message,
   };
 
-  return [system, context, ...compactHistory, user];
+  const messages: Array<{ role: string; content: string }> = [system, context];
+
+  if (memoryContext) {
+    messages.push({
+      role: "system",
+      content: memoryContext,
+    });
+  }
+
+  messages.push(...compactHistory, user);
+  return messages;
 }
