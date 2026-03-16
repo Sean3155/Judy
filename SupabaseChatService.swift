@@ -79,9 +79,11 @@ final class SupabaseChatService: ChatServicing {
         urlRequest.setValue(anonKey, forHTTPHeaderField: "apikey")
 
         let accessToken = await authTokenProvider?.currentAccessToken()
-        let bearerToken = accessToken ?? anonKey
-        let hasAuthenticatedContext = accessToken != nil
-        print("[Auth] Chat request uses authenticated context: \(hasAuthenticatedContext)")
+        let sanitizedAccessToken = accessToken?.trimmingCharacters(in: .whitespacesAndNewlines)
+        let hasAuthenticatedToken = !(sanitizedAccessToken?.isEmpty ?? true)
+        let bearerToken = hasAuthenticatedToken ? sanitizedAccessToken! : anonKey
+        let hasAPIKey = !anonKey.isEmpty
+        print("[Auth] Chat header diagnostics - apikey present: \(hasAPIKey), authenticated token present: \(hasAuthenticatedToken), using authenticated chat context: \(hasAuthenticatedToken)")
         urlRequest.setValue("Bearer \(bearerToken)", forHTTPHeaderField: "Authorization")
 
         let encoder = JSONEncoder()

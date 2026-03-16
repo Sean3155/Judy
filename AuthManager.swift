@@ -28,15 +28,31 @@ final class AuthManager: NSObject, ObservableObject, AuthTokenProviding {
     }
 
     func currentAccessToken() async -> String? {
-        if session?.expiresSoon == true {
+        let hasSession = session != nil
+        let isExpired = session?.isExpired ?? true
+        let expiresSoon = session?.expiresSoon ?? true
+        print("[Auth] Access token request - has session: \(hasSession), expired: \(isExpired), expiresSoon: \(expiresSoon)")
+
+        if expiresSoon {
             do {
                 try await refreshSessionIfNeeded(force: true)
             } catch {
                 print("[Auth] Token refresh failed before chat request")
+                if isExpired {
+                    return nil
+                }
             }
         }
 
-        return session?.accessToken
+        let token = session?.accessToken.trimmingCharacters(in: .whitespacesAndNewlines)
+        let tokenPresent = !(token?.isEmpty ?? true)
+        print("[Auth] Access token present for chat: \(tokenPresent)")
+
+        guard let token, !token.isEmpty else {
+            return nil
+        }
+
+        return token
     }
 
     func restoreSessionIfPossible() async {
