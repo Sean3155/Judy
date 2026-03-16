@@ -26,6 +26,10 @@
 		A1B2C3D4E5F60718293A0004 /* SupabaseChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293B0004 /* SupabaseChatService.swift */; };
 		A1B2C3D4E5F60718293A0005 /* WeatherSnapshotStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293B0005 /* WeatherSnapshotStore.swift */; };
 		A1B2C3D4E5F60718293A0006 /* WeatherContextResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293B0006 /* WeatherContextResponse.swift */; };
+		B1C2D3E4F5A60718293A0001 /* AuthSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A60718293B0001 /* AuthSession.swift */; };
+		B1C2D3E4F5A60718293A0002 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A60718293B0002 /* AuthManager.swift */; };
+		B1C2D3E4F5A60718293A0003 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A60718293B0003 /* AuthView.swift */; };
+		B1C2D3E4F5A60718293A0004 /* AuthTokenProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A60718293B0004 /* AuthTokenProviding.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +53,10 @@
 		A1B2C3D4E5F60718293B0004 /* SupabaseChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseChatService.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F60718293B0005 /* WeatherSnapshotStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherSnapshotStore.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F60718293B0006 /* WeatherContextResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherContextResponse.swift; sourceTree = "<group>"; };
+		B1C2D3E4F5A60718293B0001 /* AuthSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSession.swift; sourceTree = "<group>"; };
+		B1C2D3E4F5A60718293B0002 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
+		B1C2D3E4F5A60718293B0003 /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
+		B1C2D3E4F5A60718293B0004 /* AuthTokenProviding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTokenProviding.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -97,6 +105,10 @@
 				799251BF2F5FD11F00012D6E /* WeatherService.swift */,
 				799251BD2F5FD10D00012D6E /* WeatherData.swift */,
 				7981C0812F5F528800979365 /* SettingsView.swift */,
+				B1C2D3E4F5A60718293B0001 /* AuthSession.swift */,
+				B1C2D3E4F5A60718293B0002 /* AuthManager.swift */,
+				B1C2D3E4F5A60718293B0003 /* AuthView.swift */,
+				B1C2D3E4F5A60718293B0004 /* AuthTokenProviding.swift */,
 				7981C07D2F5F525800979365 /* HomeView.swift */,
 				7981C07F2F5F527A00979365 /* ChatView.swift */,
 				A1B2C3D4E5F60718293B0001 /* ChatRole.swift */,
@@ -197,6 +209,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				7981C0822F5F528D00979365 /* SettingsView.swift in Sources */,
+				B1C2D3E4F5A60718293A0001 /* AuthSession.swift in Sources */,
+				B1C2D3E4F5A60718293A0002 /* AuthManager.swift in Sources */,
+				B1C2D3E4F5A60718293A0003 /* AuthView.swift in Sources */,
+				B1C2D3E4F5A60718293A0004 /* AuthTokenProviding.swift in Sources */,
 				7981C0802F5F527E00979365 /* ChatView.swift in Sources */,
 				A1B2C3D4E5F60718293A0001 /* ChatRole.swift in Sources */,
 				A1B2C3D4E5F60718293A0002 /* ChatMessage.swift in Sources */,

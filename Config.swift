@@ -20,6 +20,14 @@ enum Config {
         )
     }
 
+    static var oauthRedirectScheme: String {
+        configValue(
+            infoPlistKey: "OAUTH_REDIRECT_SCHEME",
+            environmentKey: "OAUTH_REDIRECT_SCHEME",
+            fallback: "judy"
+        )
+    }
+
     private static func configValue(
         infoPlistKey: String,
         environmentKey: String,

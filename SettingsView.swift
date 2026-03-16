@@ -1,26 +1,32 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @ObservedObject var authManager: AuthManager
+
     var body: some View {
         NavigationStack {
-            VStack(spacing: 16) {
-                Image(systemName: "gearshape.fill")
-                    .font(.system(size: 60))
-                
-                Text("Judy Settings")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                
-                Text("App settings will appear here.")
-                    .font(.body)
-                    .foregroundStyle(.secondary)
+            List {
+                Section("Account") {
+                    if let session = authManager.session {
+                        Text(session.user.email ?? "Signed in")
+                            .foregroundStyle(.secondary)
+
+                        Button(role: .destructive) {
+                            Task { await authManager.signOut() }
+                        } label: {
+                            Text("Sign Out")
+                        }
+                    } else {
+                        Text("Not signed in")
+                            .foregroundStyle(.secondary)
+                    }
+                }
             }
-            .padding()
             .navigationTitle("Settings")
         }
     }
 }
 
 #Preview {
-    SettingsView()
+    SettingsView(authManager: AuthManager())
 }

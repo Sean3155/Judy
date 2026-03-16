@@ -55,6 +55,12 @@ protocol ChatServicing {
 }
 
 final class SupabaseChatService: ChatServicing {
+    private weak var authTokenProvider: AuthTokenProviding?
+
+    init(authTokenProvider: AuthTokenProviding? = nil) {
+        self.authTokenProvider = authTokenProvider
+    }
+
     func sendChat(request: JudyChatRequest) async throws -> String {
         let baseURL = Config.supabaseProjectURL.trimmingCharacters(in: .whitespacesAndNewlines)
         let anonKey = Config.supabaseAnonKey.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -71,7 +77,12 @@ final class SupabaseChatService: ChatServicing {
         urlRequest.httpMethod = "POST"
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
         urlRequest.setValue(anonKey, forHTTPHeaderField: "apikey")
-        urlRequest.setValue("Bearer \(anonKey)", forHTTPHeaderField: "Authorization")
+
+        let accessToken = await authTokenProvider?.currentAccessToken()
+        let bearerToken = accessToken ?? anonKey
+        let hasAuthenticatedContext = accessToken != nil
+        print("[Auth] Chat request uses authenticated context: \(hasAuthenticatedContext)")
+        urlRequest.setValue("Bearer \(bearerToken)", forHTTPHeaderField: "Authorization")
 
         let encoder = JSONEncoder()
         urlRequest.httpBody = try encoder.encode(request)
