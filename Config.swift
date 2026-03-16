@@ -1,4 +1,7 @@
 import Foundation
+#if canImport(ObjectiveC)
+import ObjectiveC
+#endif
 
 enum Config {
     static var supabaseProjectURL: String {

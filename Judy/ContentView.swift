@@ -45,6 +45,7 @@ struct ContentView: View {
                 AuthView(authManager: authManager)
             }
         }
+        .environmentObject(weatherSnapshotStore)
     }
 }
 
