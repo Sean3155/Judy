@@ -61,44 +61,58 @@ execute function public.set_current_timestamp_updated_at();
 alter table public.user_memory_items enable row level security;
 alter table public.user_memory_profile enable row level security;
 
-create policy if not exists "Users can select own memory items"
+drop policy if exists "Users can select own memory items" on public.user_memory_items;
+
+create policy "Users can select own memory items"
 on public.user_memory_items
 for select
 to authenticated
 using (auth.uid() = user_id);
 
-create policy if not exists "Users can insert own memory items"
+drop policy if exists "Users can insert own memory items" on public.user_memory_items;
+
+create policy "Users can insert own memory items"
 on public.user_memory_items
 for insert
 to authenticated
 with check (auth.uid() = user_id);
 
-create policy if not exists "Users can update own memory items"
+drop policy if exists "Users can update own memory items" on public.user_memory_items;
+
+create policy "Users can update own memory items"
 on public.user_memory_items
 for update
 to authenticated
 using (auth.uid() = user_id)
 with check (auth.uid() = user_id);
 
-create policy if not exists "Users can delete own memory items"
+drop policy if exists "Users can delete own memory items" on public.user_memory_items;
+
+create policy "Users can delete own memory items"
 on public.user_memory_items
 for delete
 to authenticated
 using (auth.uid() = user_id);
 
-create policy if not exists "Users can select own memory profile"
+drop policy if exists "Users can select own memory profile" on public.user_memory_profile;
+
+create policy "Users can select own memory profile"
 on public.user_memory_profile
 for select
 to authenticated
 using (auth.uid() = user_id);
 
-create policy if not exists "Users can insert own memory profile"
+drop policy if exists "Users can insert own memory profile" on public.user_memory_profile;
+
+create policy "Users can insert own memory profile"
 on public.user_memory_profile
 for insert
 to authenticated
 with check (auth.uid() = user_id);
 
-create policy if not exists "Users can update own memory profile"
+drop policy if exists "Users can update own memory profile" on public.user_memory_profile;
+
+create policy "Users can update own memory profile"
 on public.user_memory_profile
 for update
 to authenticated
